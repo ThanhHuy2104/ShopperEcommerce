@@ -1,4 +1,3 @@
-import React from 'react'
 import './NewCollections.css'
 import Item from '../item/Item'
 import new_collections from '../../assets/new_collections'

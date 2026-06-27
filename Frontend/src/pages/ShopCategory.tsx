@@ -1,19 +1,18 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useMemo } from "react";
 import type { CategoryProps } from "../types/types";
 import "./CSS/ShopCategory.css";
-import { ShopContext } from "../context/ShopContext";
+import { ShopContext } from "../types/types";
 import Item from "../components/item/Item";
 import dropdown_icon from "../assets/dropdown_icon.png";
 const ShopCategory = ({ category, banner }: CategoryProps) => {
   const context = useContext(ShopContext);
-  const [hasProduct, setHasProduct] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (!context) return;
-    const found =
-      context.data.filter((item) => category === item.category).length > 0;
-      setHasProduct(found);
-  }, [context, category]); 
+  const hasProduct = useMemo(() => {
+    if (!context) return false;
+    return context.data.filter((item) => category === item.category).length > 0;
+  }, [context, category]);
+
+  // Xóa useState và useEffect đi
 
   if (!context) return null;
   const { data } = context;
@@ -50,8 +49,11 @@ const ShopCategory = ({ category, banner }: CategoryProps) => {
           })
         )}
       </div>
-      <div className="shopcategory-loadmore" style={hasProduct?{display: ''}:{display:'none'}}>
-          Explore More
+      <div
+        className="shopcategory-loadmore"
+        style={hasProduct ? { display: "" } : { display: "none" }}
+      >
+        Explore More
       </div>
     </div>
   );

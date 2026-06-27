@@ -1,4 +1,3 @@
-import React from 'react'
 import exclusive_img from '../../assets/exclusive_image.png'
 import './Offers.css'
 const Offers = () => {

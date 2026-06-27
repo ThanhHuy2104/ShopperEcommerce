@@ -1,4 +1,5 @@
 import type { ReactNode } from "react"
+import { createContext } from "react"
 
 export type Product_data = {
   id: number,
@@ -32,8 +33,16 @@ export type CategoryProps = {
 
 export type ShopContextType = {
   data: Product_data[];
+  cartItems: Record<number, number>;
+  addToCart: (itemId: number) => void;        
+  removeFromCart: (itemId: number) => void;  
+  getTotalCartAmount: () => number;  
+  getTotalCartItems: () => number;
+  loading: boolean
 }
 
 export type ShopContextProviderProp = {
   children: ReactNode
 }
+
+export const ShopContext = createContext<ShopContextType | null>(null);
