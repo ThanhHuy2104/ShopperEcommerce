@@ -15,7 +15,9 @@ const Product = () => {
   const product = data.find((e) => e.id === Number(productId));
 
   if (!product) return <div>Không tìm thấy sản phẩm</div>;
-
+  if (!product.category) {
+    return <div>Thiếu category</div>;
+} 
   return (
     <div>
       <Breadcrum category={product.category} name={product.name} />

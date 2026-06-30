@@ -2,9 +2,9 @@ import type { ReactNode } from "react"
 import { createContext } from "react"
 
 export type Product_data = {
-  id: number,
-  name: string,
-  category: string,
+  id: number;
+  name: string;
+  category?: string
   image: string,
   new_price: number,
   old_price: number
