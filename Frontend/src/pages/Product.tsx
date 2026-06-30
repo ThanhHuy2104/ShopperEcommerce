@@ -10,8 +10,7 @@ const Product = () => {
   const context = useContext(ShopContext);
   const { productId } = useParams();
 
-  if (!context || context.loading) return <div>Loading...</div>;
-  
+  if(!context) return null;
   const { data } = context;
   const product = data.find((e) => e.id === Number(productId));
 

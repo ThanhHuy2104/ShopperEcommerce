@@ -38,7 +38,6 @@ export type ShopContextType = {
   removeFromCart: (itemId: number) => void;  
   getTotalCartAmount: () => number;  
   getTotalCartItems: () => number;
-  loading: boolean
 }
 
 export type ShopContextProviderProp = {

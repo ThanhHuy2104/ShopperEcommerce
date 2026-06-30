@@ -1,17 +1,16 @@
 import { useState, useEffect } from "react";
 import { getApi } from "../services/apiProducts.ts";
+import { ShopContext } from "../types/types.ts";
 import type {
   Product_data,
   ShopContextType,
   ShopContextProviderProp,
 } from "../types/types.ts";
 import { productImages } from "../assets/all_image_product.ts";
-import { ShopContext } from "../types/types.ts";
+
 
 const ShopContextProvider = ({ children }: ShopContextProviderProp) => {
   const [data, setData] = useState<Product_data[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-
   const [cartItems, setCartItems] = useState<Record<number, number>>({});
 
   // Khởi tạo cart dựa trên danh sách sản phẩm
@@ -27,21 +26,17 @@ const ShopContextProvider = ({ children }: ShopContextProviderProp) => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      try {
-        const images = Object.values(productImages);
-        const result = await getApi();
+      const images = Object.values(productImages);
 
-        result.forEach((product, index) => {
-          product.image = images[index];
-        });
+      const result = await getApi();
 
-        setData(result);
-        setCartItems(getDefaultCart(result));
-      } catch (error) {
-        console.error("Lỗi fetch data:", error);
-      } finally {
-        setLoading(false); // ✅ dù thành công hay lỗi đều tắt loading
-      }
+      result.forEach((product, index) => {
+        product.image = images[index];
+      });
+
+      setData(result);
+
+      setCartItems(getDefaultCart(result));
     };
 
     fetchProducts();
@@ -73,14 +68,14 @@ const ShopContextProvider = ({ children }: ShopContextProviderProp) => {
   };
 
   const getTotalCartItems = (): number => {
-    let totalItem: number = 0;
-    for (const item in cartItems) {
-      if (cartItems[item] > 0) {
-        totalItem += cartItems[item];
+    let totalItem = 0;
+    for(const item in cartItems) {
+      if(cartItems[item] > 0) {
+        totalItem+= cartItems[item]
       }
     }
     return totalItem;
-  };
+  }
 
   useEffect(() => {
     console.log(cartItems);
@@ -92,8 +87,7 @@ const ShopContextProvider = ({ children }: ShopContextProviderProp) => {
     addToCart,
     removeFromCart,
     getTotalCartAmount,
-    getTotalCartItems,
-    loading
+    getTotalCartItems
   };
 
   return (
